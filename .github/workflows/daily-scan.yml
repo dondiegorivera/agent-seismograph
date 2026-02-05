@@ -1,0 +1,88 @@
+# .github/workflows/daily-scan.yml
+name: Agent Seismograph Daily Scan
+
+on:
+  schedule:
+    # Run at 10:00 UTC daily
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+    inputs:
+      predictions:
+        description: 'Prediction IDs to scan (space-separated, or "all")'
+        required: false
+        default: ''
+
+env:
+  GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+  TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      
+      - name: Run daily scan
+        run: |
+          if [ "${{ github.event.inputs.predictions }}" = "all" ]; then
+            python gatherer.py --all
+          elif [ -n "${{ github.event.inputs.predictions }}" ]; then
+            python gatherer.py --predictions ${{ github.event.inputs.predictions }}
+          else
+            python gatherer.py --schedule
+          fi
+      
+      - name: Upload scan results
+        uses: actions/upload-artifact@v4
+        with:
+          name: scan-results-${{ github.run_number }}
+          path: output/*.json
+          retention-days: 90
+      
+      - name: Commit results to repo
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add output/*.json
+          git diff --staged --quiet || git commit -m "Daily scan $(date -u +%Y-%m-%d)"
+          git push
+        continue-on-error: true
+      
+      # Optional: Deploy to Cloudflare R2
+      - name: Deploy to Cloudflare R2
+        if: ${{ vars.DEPLOY_TO_R2 == 'true' }}
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          R2_BUCKET: ${{ vars.R2_BUCKET_NAME }}
+        run: |
+          # Install rclone
+          curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip
+          unzip rclone-current-linux-amd64.zip
+          cd rclone-*-linux-amd64
+          
+          # Configure for R2
+          mkdir -p ~/.config/rclone
+          cat > ~/.config/rclone/rclone.conf << EOF
+          [r2]
+          type = s3
+          provider = Cloudflare
+          access_key_id = ${{ secrets.R2_ACCESS_KEY_ID }}
+          secret_access_key = ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          endpoint = https://${CF_ACCOUNT_ID}.r2.cloudflarestorage.com
+          EOF
+          
+          # Upload files
+          ./rclone copy ../output r2:${R2_BUCKET}/scans/
+          echo "Uploaded to R2"

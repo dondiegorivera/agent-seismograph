@@ -1,0 +1,922 @@
+{
+  "catalog_version": "1.0",
+  "baseline_date": "2025-02-01",
+  "time_horizons": {
+    "3mo": "2025-05-01",
+    "6mo": "2025-08-01",
+    "12mo": "2026-02-01"
+  },
+  "models": ["opus", "gemini", "grok", "kimi", "gpt", "deepseek"],
+  "predictions": [
+    {
+      "id": "INF-01",
+      "category": "infrastructure",
+      "title": "Compute Denial of Service (CDoS)",
+      "description": "Agent traffic causing 'bill shock' bankruptcies",
+      "search_queries": [
+        "AI agent API costs bill shock startup",
+        "bot traffic serverless billing spike",
+        "Vercel Cloudflare agent traffic costs 2025",
+        "LLM agent DDoS infrastructure incident"
+      ],
+      "trigger_keywords": ["bill shock", "bankrupted by bots", "agent traffic costs", "API abuse billing", "compute costs agent"],
+      "probabilities": {
+        "opus": {"3mo": 65, "6mo": 85, "12mo": 95},
+        "gemini": {"3mo": 75, "6mo": 90, "12mo": 98},
+        "grok": {"3mo": 85, "6mo": 98, "12mo": 99},
+        "kimi": {"3mo": 80, "6mo": 95, "12mo": 99},
+        "gpt": {"3mo": 70, "6mo": 90, "12mo": 98},
+        "deepseek": {"3mo": 40, "6mo": 75, "12mo": 95}
+      }
+    },
+    {
+      "id": "INF-02",
+      "category": "infrastructure",
+      "title": "API Re-monopolization / Agent Editions",
+      "description": "SaaS launching Agent Tier APIs with different pricing",
+      "search_queries": [
+        "API agent tier pricing announcement",
+        "Stripe Shopify agent API launch",
+        "SaaS automation tier pricing 2025",
+        "API v2 agent specific limits"
+      ],
+      "trigger_keywords": ["agent tier", "agent API", "automation pricing", "agent edition", "machine-to-machine tier"],
+      "probabilities": {
+        "opus": {"3mo": 25, "6mo": 55, "12mo": 80},
+        "gemini": {"3mo": 20, "6mo": 45, "12mo": 75},
+        "grok": {"3mo": 45, "6mo": 80, "12mo": 95},
+        "kimi": {"3mo": 30, "6mo": 60, "12mo": 85},
+        "gpt": {"3mo": 30, "6mo": 60, "12mo": 85},
+        "deepseek": {"3mo": 15, "6mo": 40, "12mo": 70}
+      }
+    },
+    {
+      "id": "INF-03",
+      "category": "infrastructure",
+      "title": "Rate Limit → Economic Limit",
+      "description": "Shift from rate limits to credits/prepaid wallets",
+      "search_queries": [
+        "API credits prepaid wallet launch",
+        "usage based billing API 2025",
+        "per-operation API pricing",
+        "API credits system SaaS"
+      ],
+      "trigger_keywords": ["credits", "prepaid wallet", "per-operation", "usage-based API", "economic rate limit"],
+      "probabilities": {
+        "opus": {"3mo": 40, "6mo": 70, "12mo": 90},
+        "gemini": {"3mo": 45, "6mo": 75, "12mo": 95},
+        "grok": {"3mo": 70, "6mo": 90, "12mo": 99},
+        "kimi": {"3mo": 60, "6mo": 85, "12mo": 98},
+        "gpt": {"3mo": 55, "6mo": 80, "12mo": 95},
+        "deepseek": {"3mo": 30, "6mo": 60, "12mo": 90}
+      }
+    },
+    {
+      "id": "INF-04",
+      "category": "infrastructure",
+      "title": "Agent-native stack shift",
+      "description": "New projects built on edge-native stacks",
+      "search_queries": [
+        "Cloudflare Workers edge native startup",
+        "Turso Inngest agent infrastructure",
+        "edge-first architecture AI agents",
+        "serverless agent deployment patterns"
+      ],
+      "trigger_keywords": ["edge-native", "Cloudflare Workers", "Turso", "Inngest", "agent-native stack"],
+      "probabilities": {
+        "opus": {"3mo": 15, "6mo": 35, "12mo": 65},
+        "gemini": {"3mo": 10, "6mo": 25, "12mo": 55},
+        "grok": {"3mo": 30, "6mo": 60, "12mo": 85},
+        "kimi": {"3mo": 10, "6mo": 30, "12mo": 60},
+        "gpt": {"3mo": 15, "6mo": 35, "12mo": 65},
+        "deepseek": {"3mo": 5, "6mo": 20, "12mo": 50}
+      }
+    },
+    {
+      "id": "SEC-01",
+      "category": "security",
+      "title": "Internet Bifurcation (Verified vs Wild)",
+      "description": "Split between authenticated web and open bot ghetto",
+      "search_queries": [
+        "mandatory login wall platform 2025",
+        "passkey adoption rate increase",
+        "verified identity web access",
+        "unauthenticated web dying bots"
+      ],
+      "trigger_keywords": ["login wall", "passkey", "verified identity", "authenticated web", "ID verification required"],
+      "probabilities": {
+        "opus": {"3mo": 30, "6mo": 60, "12mo": 85},
+        "gemini": {"3mo": 40, "6mo": 70, "12mo": 90},
+        "grok": {"3mo": 50, "6mo": 80, "12mo": 98},
+        "kimi": {"3mo": 45, "6mo": 75, "12mo": 95},
+        "gpt": {"3mo": 35, "6mo": 65, "12mo": 90},
+        "deepseek": {"3mo": 25, "6mo": 55, "12mo": 85}
+      }
+    },
+    {
+      "id": "SEC-02",
+      "category": "security",
+      "title": "Permissions stack / Policy-as-code",
+      "description": "Enterprise agent guardrails adoption",
+      "search_queries": [
+        "AI agent guardrails enterprise",
+        "agent spend caps policy",
+        "SOC2 autonomous action controls",
+        "policy-as-code AI agents"
+      ],
+      "trigger_keywords": ["agent guardrails", "spend caps", "policy-as-code", "agent permissions", "autonomous action controls"],
+      "probabilities": {
+        "opus": {"3mo": 20, "6mo": 45, "12mo": 75},
+        "gemini": {"3mo": 25, "6mo": 55, "12mo": 80},
+        "grok": {"3mo": 40, "6mo": 75, "12mo": 95},
+        "kimi": {"3mo": 15, "6mo": 40, "12mo": 75},
+        "gpt": {"3mo": 25, "6mo": 55, "12mo": 85},
+        "deepseek": {"3mo": 10, "6mo": 30, "12mo": 65}
+      }
+    },
+    {
+      "id": "SEC-03",
+      "category": "security",
+      "title": "Ambient authentication collapse",
+      "description": "Breach via long-lived agent sessions triggers policy shift",
+      "search_queries": [
+        "agent session hijack breach",
+        "long-lived token compromise AI",
+        "ephemeral authentication agent",
+        "Fortune 500 breach agent session"
+      ],
+      "trigger_keywords": ["session hijack", "token theft", "ephemeral auth", "agent session breach", "persistent credential"],
+      "probabilities": {
+        "opus": {"3mo": 15, "6mo": 40, "12mo": 70},
+        "gemini": {"3mo": 10, "6mo": 35, "12mo": 65},
+        "grok": {"3mo": 30, "6mo": 65, "12mo": 90},
+        "kimi": {"3mo": 10, "6mo": 30, "12mo": 65},
+        "gpt": {"3mo": 15, "6mo": 40, "12mo": 70},
+        "deepseek": {"3mo": 5, "6mo": 25, "12mo": 60}
+      }
+    },
+    {
+      "id": "SEC-04",
+      "category": "security",
+      "title": "Memory poisoning",
+      "description": "Adversarial poisoning of agent memory/context",
+      "search_queries": [
+        "LLM memory poisoning attack",
+        "agent context manipulation adversarial",
+        "AI memory integrity compromise",
+        "persistent context injection"
+      ],
+      "trigger_keywords": ["memory poisoning", "context manipulation", "agent drift adversarial", "persistent injection"],
+      "probabilities": {
+        "opus": {"3mo": 5, "6mo": 15, "12mo": 40},
+        "gemini": {"3mo": 5, "6mo": 10, "12mo": 30},
+        "grok": {"3mo": 15, "6mo": 40, "12mo": 70},
+        "kimi": {"3mo": 2, "6mo": 8, "12mo": 25},
+        "gpt": {"3mo": 5, "6mo": 12, "12mo": 35},
+        "deepseek": {"3mo": 1, "6mo": 5, "12mo": 20}
+      }
+    },
+    {
+      "id": "SEC-05",
+      "category": "security",
+      "title": "Agent supply-chain risk",
+      "description": "Backdoored agent pack scandal",
+      "search_queries": [
+        "malicious AI agent package NPM PyPI",
+        "LLM agent framework vulnerability CVE",
+        "backdoored agent pack discovered",
+        "AI agent supply chain attack"
+      ],
+      "trigger_keywords": ["malicious agent", "backdoor pack", "agent CVE", "supply chain", "trojan agent"],
+      "probabilities": {
+        "opus": {"3mo": 35, "6mo": 65, "12mo": 90},
+        "gemini": {"3mo": 40, "6mo": 70, "12mo": 95},
+        "grok": {"3mo": 60, "6mo": 90, "12mo": 99},
+        "kimi": {"3mo": 50, "6mo": 80, "12mo": 98},
+        "gpt": {"3mo": 45, "6mo": 75, "12mo": 95},
+        "deepseek": {"3mo": 60, "6mo": 85, "12mo": 98}
+      }
+    },
+    {
+      "id": "SEC-06",
+      "category": "security",
+      "title": "Prompt injection via documents",
+      "description": "Invoice/PDF injection triggering agent actions",
+      "search_queries": [
+        "prompt injection PDF invoice attack",
+        "BEC prompt injection AI",
+        "document injection LLM agent",
+        "malicious PDF AI agent trigger"
+      ],
+      "trigger_keywords": ["prompt injection", "PDF attack", "invoice hijack", "document injection", "BEC AI"],
+      "probabilities": {
+        "opus": {"3mo": 50, "6mo": 75, "12mo": 95},
+        "gemini": {"3mo": 60, "6mo": 85, "12mo": 98},
+        "grok": {"3mo": 75, "6mo": 95, "12mo": 99},
+        "kimi": {"3mo": 70, "6mo": 90, "12mo": 99},
+        "gpt": {"3mo": 65, "6mo": 85, "12mo": 98},
+        "deepseek": {"3mo": 40, "6mo": 70, "12mo": 95}
+      }
+    },
+    {
+      "id": "BIZ-01",
+      "category": "business",
+      "title": "Executive Cognition Outsourcing",
+      "description": "Formal delegation of decision authority to agents",
+      "search_queries": [
+        "AI agent decision making authority company",
+        "autonomous AI executive decisions",
+        "solo operator AI agent business",
+        "agent-run company startup"
+      ],
+      "trigger_keywords": ["agent decision authority", "autonomous decision", "AI executive", "solo operator"],
+      "probabilities": {
+        "opus": {"3mo": 10, "6mo": 30, "12mo": 55},
+        "gemini": {"3mo": 5, "6mo": 15, "12mo": 35},
+        "grok": {"3mo": 25, "6mo": 55, "12mo": 80},
+        "kimi": {"3mo": 5, "6mo": 15, "12mo": 40},
+        "gpt": {"3mo": 8, "6mo": 22, "12mo": 45},
+        "deepseek": {"3mo": 2, "6mo": 10, "12mo": 30}
+      }
+    },
+    {
+      "id": "BIZ-02",
+      "category": "business",
+      "title": "Algorithmic Liability / Safe Execution",
+      "description": "AI malpractice insurance and safe mode requirements",
+      "search_queries": [
+        "AI malpractice insurance product launch",
+        "agent liability lawsuit decision",
+        "AI safe mode audit trail requirement",
+        "algorithmic liability insurance"
+      ],
+      "trigger_keywords": ["AI insurance", "agent liability", "malpractice AI", "safe mode", "audit trail"],
+      "probabilities": {
+        "opus": {"3mo": 15, "6mo": 35, "12mo": 60},
+        "gemini": {"3mo": 20, "6mo": 45, "12mo": 70},
+        "grok": {"3mo": 20, "6mo": 50, "12mo": 80},
+        "kimi": {"3mo": 10, "6mo": 35, "12mo": 65},
+        "gpt": {"3mo": 20, "6mo": 45, "12mo": 70},
+        "deepseek": {"3mo": 10, "6mo": 35, "12mo": 70}
+      }
+    },
+    {
+      "id": "BIZ-03",
+      "category": "business",
+      "title": "Procurement Flips to Agent-First",
+      "description": "RFPs requiring machine-readable evidence",
+      "search_queries": [
+        "enterprise RFP JSON machine readable",
+        "agent-readable procurement spec",
+        "automated vendor evaluation AI",
+        "structured evidence procurement"
+      ],
+      "trigger_keywords": ["agent-readable", "JSON RFP", "machine-readable evidence", "automated procurement"],
+      "probabilities": {
+        "opus": {"3mo": 10, "6mo": 30, "12mo": 60},
+        "gemini": {"3mo": 15, "6mo": 40, "12mo": 70},
+        "grok": {"3mo": 30, "6mo": 60, "12mo": 85},
+        "kimi": {"3mo": 5, "6mo": 25, "12mo": 60},
+        "gpt": {"3mo": 12, "6mo": 35, "12mo": 65},
+        "deepseek": {"3mo": 5, "6mo": 25, "12mo": 60}
+      }
+    },
+    {
+      "id": "BIZ-04",
+      "category": "business",
+      "title": "Civic & Bureaucratic DDoS",
+      "description": "Government portals overwhelmed by agent volume",
+      "search_queries": [
+        "FOIA flooding AI bots government",
+        "permit system overload automated requests",
+        "public comment spam AI generated",
+        "government portal shutdown bot traffic"
+      ],
+      "trigger_keywords": ["FOIA flood", "permit overload", "public comment spam", "government portal down", "bureaucratic DDoS"],
+      "probabilities": {
+        "opus": {"3mo": 25, "6mo": 50, "12mo": 75},
+        "gemini": {"3mo": 35, "6mo": 65, "12mo": 85},
+        "grok": {"3mo": 60, "6mo": 90, "12mo": 99},
+        "kimi": {"3mo": 40, "6mo": 70, "12mo": 90},
+        "gpt": {"3mo": 30, "6mo": 60, "12mo": 85},
+        "deepseek": {"3mo": 50, "6mo": 80, "12mo": 95}
+      }
+    },
+    {
+      "id": "BIZ-05",
+      "category": "business",
+      "title": "Litigation at Scale",
+      "description": "Mass automated filings",
+      "search_queries": [
+        "mass arbitration AI generated filings",
+        "small claims flooding automated",
+        "legal tech automated claim generation",
+        "bulk lawsuit filing bots"
+      ],
+      "trigger_keywords": ["mass arbitration", "automated filings", "claim generation", "legal flooding"],
+      "probabilities": {
+        "opus": {"3mo": 15, "6mo": 35, "12mo": 60},
+        "gemini": {"3mo": 10, "6mo": 30, "12mo": 55},
+        "grok": {"3mo": 40, "6mo": 75, "12mo": 95},
+        "kimi": {"3mo": 15, "6mo": 40, "12mo": 70},
+        "gpt": {"3mo": 12, "6mo": 30, "12mo": 55},
+        "deepseek": {"3mo": 5, "6mo": 20, "12mo": 50}
+      }
+    },
+    {
+      "id": "BIZ-06",
+      "category": "business",
+      "title": "Jurisdictional Fluidity / Sovereign Agents",
+      "description": "Agents operating across jurisdictions via crypto/DAOs",
+      "search_queries": [
+        "Wyoming DAO AI agent LLC",
+        "agent-controlled legal entity",
+        "cross-border AI agent arbitrage",
+        "autonomous agent crypto entity"
+      ],
+      "trigger_keywords": ["DAO agent", "agent LLC", "jurisdictional arbitrage", "sovereign agent"],
+      "probabilities": {
+        "opus": {"3mo": 5, "6mo": 15, "12mo": 35},
+        "gemini": {"3mo": 2, "6mo": 10, "12mo": 25},
+        "grok": {"3mo": 20, "6mo": 50, "12mo": 80},
+        "kimi": {"3mo": 1, "6mo": 5, "12mo": 20},
+        "gpt": {"3mo": 3, "6mo": 10, "12mo": 25},
+        "deepseek": {"3mo": 0, "6mo": 3, "12mo": 15}
+      }
+    },
+    {
+      "id": "BIZ-07",
+      "category": "business",
+      "title": "IP / Prompt Inheritance Doctrine",
+      "description": "Legal precedent on prompt/output ownership",
+      "search_queries": [
+        "prompt copyright lawsuit filed",
+        "AI output IP ownership court",
+        "agent output intellectual property",
+        "prompt engineering IP case"
+      ],
+      "trigger_keywords": ["prompt copyright", "output ownership", "AI IP lawsuit", "prompt IP"],
+      "probabilities": {
+        "opus": {"3mo": 5, "6mo": 15, "12mo": 40},
+        "gemini": {"3mo": 5, "6mo": 20, "12mo": 45},
+        "grok": {"3mo": 5, "6mo": 20, "12mo": 50},
+        "kimi": {"3mo": 1, "6mo": 10, "12mo": 35},
+        "gpt": {"3mo": 5, "6mo": 18, "12mo": 45},
+        "deepseek": {"3mo": 0, "6mo": 5, "12mo": 25}
+      }
+    },
+    {
+      "id": "MKT-01",
+      "category": "market",
+      "title": "Correlated Failure Stampedes",
+      "description": "Flash crash from synchronized agents",
+      "search_queries": [
+        "AI agent flash crash crypto",
+        "synchronized bot inventory wipeout",
+        "correlated agent trading failure",
+        "automated trading cascade incident"
+      ],
+      "trigger_keywords": ["flash crash", "agent stampede", "correlated failure", "synchronized bots"],
+      "probabilities": {
+        "opus": {"3mo": 20, "6mo": 45, "12mo": 70},
+        "gemini": {"3mo": 15, "6mo": 40, "12mo": 65},
+        "grok": {"3mo": 40, "6mo": 75, "12mo": 95},
+        "kimi": {"3mo": 20, "6mo": 45, "12mo": 70},
+        "gpt": {"3mo": 20, "6mo": 45, "12mo": 70},
+        "deepseek": {"3mo": 10, "6mo": 35, "12mo": 80}
+      }
+    },
+    {
+      "id": "MKT-02",
+      "category": "market",
+      "title": "Micro-Optimization Death Spirals",
+      "description": "SEO/ads/pricing gaming outpaces platforms",
+      "search_queries": [
+        "Google search quality AI spam collapse",
+        "SEO AI content death spiral",
+        "pricing algorithm war automation",
+        "review gaming epidemic AI"
+      ],
+      "trigger_keywords": ["SEO death spiral", "content spam", "pricing war", "review gaming", "platform gaming"],
+      "probabilities": {
+        "opus": {"3mo": 45, "6mo": 70, "12mo": 90},
+        "gemini": {"3mo": 50, "6mo": 75, "12mo": 95},
+        "grok": {"3mo": 70, "6mo": 95, "12mo": 99},
+        "kimi": {"3mo": 60, "6mo": 85, "12mo": 98},
+        "gpt": {"3mo": 55, "6mo": 80, "12mo": 95},
+        "deepseek": {"3mo": 30, "6mo": 65, "12mo": 90}
+      }
+    },
+    {
+      "id": "MKT-03",
+      "category": "market",
+      "title": "Clean Data Liquidity Crisis",
+      "description": "Verified data feeds become premium",
+      "search_queries": [
+        "website blocks AI bot scraping",
+        "robots.txt AI crawler block 2025",
+        "verified data feed premium pricing",
+        "data access paywall AI"
+      ],
+      "trigger_keywords": ["AI bot block", "scraping banned", "verified data", "data paywall"],
+      "probabilities": {
+        "opus": {"3mo": 35, "6mo": 60, "12mo": 85},
+        "gemini": {"3mo": 45, "6mo": 70, "12mo": 90},
+        "grok": {"3mo": 60, "6mo": 90, "12mo": 99},
+        "kimi": {"3mo": 50, "6mo": 80, "12mo": 95},
+        "gpt": {"3mo": 40, "6mo": 70, "12mo": 92},
+        "deepseek": {"3mo": 25, "6mo": 60, "12mo": 90}
+      }
+    },
+    {
+      "id": "MKT-04",
+      "category": "market",
+      "title": "Labor Compression (Agent Operator)",
+      "description": "Solo operators achieving massive scale",
+      "search_queries": [
+        "solo founder AI agent millions ARR",
+        "one person company AI automation",
+        "agency layoffs AI agents replaced",
+        "agent operator job role emerging"
+      ],
+      "trigger_keywords": ["solo operator", "agent operator", "one-person company", "team compression"],
+      "probabilities": {
+        "opus": {"3mo": 30, "6mo": 55, "12mo": 80},
+        "gemini": {"3mo": 15, "6mo": 35, "12mo": 60},
+        "grok": {"3mo": 50, "6mo": 85, "12mo": 98},
+        "kimi": {"3mo": 20, "6mo": 50, "12mo": 80},
+        "gpt": {"3mo": 25, "6mo": 50, "12mo": 75},
+        "deepseek": {"3mo": 10, "6mo": 30, "12mo": 70}
+      }
+    },
+    {
+      "id": "MKT-05",
+      "category": "market",
+      "title": "Existential Minimum Wage",
+      "description": "Commodity digital labor reprices to near-zero",
+      "search_queries": [
+        "Upwork Fiverr rates collapse AI",
+        "freelance copywriting rates zero",
+        "gig economy AI displacement",
+        "digital labor race to bottom"
+      ],
+      "trigger_keywords": ["freelance collapse", "rate crash", "gig displacement", "minimum wage AI"],
+      "probabilities": {
+        "opus": {"3mo": 20, "6mo": 40, "12mo": 65},
+        "gemini": {"3mo": 25, "6mo": 50, "12mo": 75},
+        "grok": {"3mo": 50, "6mo": 80, "12mo": 95},
+        "kimi": {"3mo": 30, "6mo": 60, "12mo": 85},
+        "gpt": {"3mo": 25, "6mo": 50, "12mo": 75},
+        "deepseek": {"3mo": 15, "6mo": 45, "12mo": 80}
+      }
+    },
+    {
+      "id": "MKT-06",
+      "category": "market",
+      "title": "Energy / Hardware Reality",
+      "description": "Physical infrastructure constraints become visible",
+      "search_queries": [
+        "GPU shortage AI agents local",
+        "crypto miner pivot inference hosting",
+        "data center capacity AI demand",
+        "edge AI hardware demand spike"
+      ],
+      "trigger_keywords": ["GPU shortage", "miner pivot", "data center capacity", "inference hardware"],
+      "probabilities": {
+        "opus": {"3mo": 10, "6mo": 30, "12mo": 55},
+        "gemini": {"3mo": 10, "6mo": 30, "12mo": 55},
+        "grok": {"3mo": 25, "6mo": 55, "12mo": 80},
+        "kimi": {"3mo": 5, "6mo": 20, "12mo": 50},
+        "gpt": {"3mo": 10, "6mo": 28, "12mo": 55},
+        "deepseek": {"3mo": 5, "6mo": 20, "12mo": 60}
+      }
+    },
+    {
+      "id": "ATK-01",
+      "category": "attack",
+      "title": "Operational Spam",
+      "description": "Support/refund queues flooded by agents",
+      "search_queries": [
+        "AI bot support ticket flooding attack",
+        "automated refund abuse spike",
+        "Zendesk cost spike bot tickets",
+        "customer support queue DDoS"
+      ],
+      "trigger_keywords": ["support flood", "ticket spam", "refund abuse", "queue DDoS", "complaint bots"],
+      "probabilities": {
+        "opus": {"3mo": 55, "6mo": 80, "12mo": 95},
+        "gemini": {"3mo": 65, "6mo": 85, "12mo": 98},
+        "grok": {"3mo": 80, "6mo": 98, "12mo": 99},
+        "kimi": {"3mo": 75, "6mo": 95, "12mo": 99},
+        "gpt": {"3mo": 70, "6mo": 90, "12mo": 98},
+        "deepseek": {"3mo": 50, "6mo": 80, "12mo": 95}
+      }
+    },
+    {
+      "id": "ATK-02",
+      "category": "attack",
+      "title": "Temporal Attacks (Weekend Warfare)",
+      "description": "Attacks timed for off-hours",
+      "search_queries": [
+        "Friday 5pm cyberattack pattern",
+        "holiday weekend security incident",
+        "after-hours trading anomaly AI",
+        "off-hours automated attack"
+      ],
+      "trigger_keywords": ["Friday attack", "weekend exploit", "off-hours", "holiday timing"],
+      "probabilities": {
+        "opus": {"3mo": 25, "6mo": 50, "12mo": 75},
+        "gemini": {"3mo": 30, "6mo": 55, "12mo": 80},
+        "grok": {"3mo": 50, "6mo": 80, "12mo": 95},
+        "kimi": {"3mo": 30, "6mo": 55, "12mo": 80},
+        "gpt": {"3mo": 28, "6mo": 55, "12mo": 80},
+        "deepseek": {"3mo": 20, "6mo": 50, "12mo": 85}
+      }
+    },
+    {
+      "id": "ATK-03",
+      "category": "attack",
+      "title": "Resource Exhaustion via Legitimate Flows",
+      "description": "Cart holds, slot reservations weaponized",
+      "search_queries": [
+        "cart holding bot attack ecommerce",
+        "appointment slot hoarding automated",
+        "inventory locking sabotage bots",
+        "reservation system abuse AI"
+      ],
+      "trigger_keywords": ["cart hold", "slot hoarding", "inventory lock", "reservation abuse"],
+      "probabilities": {
+        "opus": {"3mo": 40, "6mo": 65, "12mo": 85},
+        "gemini": {"3mo": 50, "6mo": 75, "12mo": 90},
+        "grok": {"3mo": 70, "6mo": 95, "12mo": 99},
+        "kimi": {"3mo": 60, "6mo": 85, "12mo": 95},
+        "gpt": {"3mo": 50, "6mo": 75, "12mo": 92},
+        "deepseek": {"3mo": 40, "6mo": 70, "12mo": 90}
+      }
+    },
+    {
+      "id": "ATK-04",
+      "category": "attack",
+      "title": "Changelog Arms Race",
+      "description": "Competitive intelligence loops compress",
+      "search_queries": [
+        "competitor monitoring AI automated",
+        "pricing page scraping war",
+        "changelog tracking bots competition",
+        "competitive intelligence automation"
+      ],
+      "trigger_keywords": ["changelog scraping", "competitive intel", "pricing war", "monitoring bots"],
+      "probabilities": {
+        "opus": {"3mo": 45, "6mo": 70, "12mo": 90},
+        "gemini": {"3mo": 40, "6mo": 65, "12mo": 85},
+        "grok": {"3mo": 65, "6mo": 90, "12mo": 98},
+        "kimi": {"3mo": 30, "6mo": 60, "12mo": 85},
+        "gpt": {"3mo": 45, "6mo": 70, "12mo": 90},
+        "deepseek": {"3mo": 25, "6mo": 55, "12mo": 85}
+      }
+    },
+    {
+      "id": "ATK-05",
+      "category": "attack",
+      "title": "Review/Identity Fraud Networks",
+      "description": "Cross-platform synthetic personas",
+      "search_queries": [
+        "fake review network AI generated",
+        "synthetic identity fraud ring",
+        "Trustpilot Amazon review manipulation",
+        "persona farm AI accounts"
+      ],
+      "trigger_keywords": ["fake review", "synthetic identity", "persona farm", "review fraud"],
+      "probabilities": {
+        "opus": {"3mo": 60, "6mo": 85, "12mo": 95},
+        "gemini": {"3mo": 70, "6mo": 90, "12mo": 98},
+        "grok": {"3mo": 80, "6mo": 98, "12mo": 99},
+        "kimi": {"3mo": 80, "6mo": 95, "12mo": 99},
+        "gpt": {"3mo": 70, "6mo": 90, "12mo": 98},
+        "deepseek": {"3mo": 60, "6mo": 85, "12mo": 95}
+      }
+    },
+    {
+      "id": "ATK-06",
+      "category": "attack",
+      "title": "Social Norm Exploits",
+      "description": "Agents exploiting ambiguity in instructions",
+      "search_queries": [
+        "AI agent social engineering exploit",
+        "polite bot manipulation attack",
+        "instruction ambiguity AI abuse",
+        "agent social norm exploit"
+      ],
+      "trigger_keywords": ["social engineering", "instruction ambiguity", "polite manipulation", "norm exploit"],
+      "probabilities": {
+        "opus": {"3mo": 20, "6mo": 40, "12mo": 65},
+        "gemini": {"3mo": 25, "6mo": 50, "12mo": 75},
+        "grok": {"3mo": 40, "6mo": 70, "12mo": 90},
+        "kimi": {"3mo": 20, "6mo": 45, "12mo": 75},
+        "gpt": {"3mo": 20, "6mo": 42, "12mo": 70},
+        "deepseek": {"3mo": 5, "6mo": 20, "12mo": 60}
+      }
+    },
+    {
+      "id": "META-01",
+      "category": "meta",
+      "title": "Reputation-Portable Agent Identity",
+      "description": "Cross-platform agent reputation standards",
+      "search_queries": [
+        "agent identity standard protocol",
+        "cross-platform AI reputation",
+        "agent passport authentication",
+        "portable agent credentials"
+      ],
+      "trigger_keywords": ["agent identity", "reputation portable", "agent passport", "credential standard"],
+      "probabilities": {
+        "opus": {"3mo": 10, "6mo": 25, "12mo": 50},
+        "gemini": {"3mo": 5, "6mo": 20, "12mo": 45},
+        "grok": {"3mo": 30, "6mo": 65, "12mo": 90},
+        "kimi": {"3mo": 5, "6mo": 15, "12mo": 40},
+        "gpt": {"3mo": 8, "6mo": 22, "12mo": 50},
+        "deepseek": {"3mo": 0, "6mo": 10, "12mo": 35}
+      }
+    },
+    {
+      "id": "META-02",
+      "category": "meta",
+      "title": "Human Middleware",
+      "description": "Human-in-the-loop as a service",
+      "search_queries": [
+        "CAPTCHA solving service AI agents",
+        "human fallback API service",
+        "Scale AI agent verification",
+        "human in the loop as a service"
+      ],
+      "trigger_keywords": ["human fallback", "CAPTCHA service", "human middleware", "verification service"],
+      "probabilities": {
+        "opus": {"3mo": 35, "6mo": 60, "12mo": 80},
+        "gemini": {"3mo": 45, "6mo": 70, "12mo": 90},
+        "grok": {"3mo": 60, "6mo": 90, "12mo": 98},
+        "kimi": {"3mo": 50, "6mo": 80, "12mo": 95},
+        "gpt": {"3mo": 45, "6mo": 70, "12mo": 90},
+        "deepseek": {"3mo": 30, "6mo": 65, "12mo": 90}
+      }
+    },
+    {
+      "id": "META-03",
+      "category": "meta",
+      "title": "AgentOps / Observability",
+      "description": "Tracing, debugging, eval become mandatory",
+      "search_queries": [
+        "LangSmith agent observability growth",
+        "AI agent debugging tool launch",
+        "agent tracing platform funding",
+        "AgentOps monitoring startup"
+      ],
+      "trigger_keywords": ["AgentOps", "agent observability", "agent tracing", "eval harness"],
+      "probabilities": {
+        "opus": {"3mo": 45, "6mo": 70, "12mo": 90},
+        "gemini": {"3mo": 50, "6mo": 80, "12mo": 95},
+        "grok": {"3mo": 70, "6mo": 95, "12mo": 99},
+        "kimi": {"3mo": 60, "6mo": 85, "12mo": 98},
+        "gpt": {"3mo": 55, "6mo": 80, "12mo": 95},
+        "deepseek": {"3mo": 40, "6mo": 75, "12mo": 95}
+      }
+    },
+    {
+      "id": "META-04",
+      "category": "meta",
+      "title": "Agent Ecology / Dependency Collapse",
+      "description": "Keystone agent/API outage causes cascade",
+      "search_queries": [
+        "OpenAI outage startup cascade failure",
+        "API dependency collapse AI agents",
+        "model provider outage ecosystem impact",
+        "agent infrastructure single point failure"
+      ],
+      "trigger_keywords": ["cascade failure", "dependency collapse", "keystone outage", "ecosystem failure"],
+      "probabilities": {
+        "opus": {"3mo": 10, "6mo": 25, "12mo": 50},
+        "gemini": {"3mo": 5, "6mo": 15, "12mo": 35},
+        "grok": {"3mo": 15, "6mo": 40, "12mo": 70},
+        "kimi": {"3mo": 5, "6mo": 15, "12mo": 40},
+        "gpt": {"3mo": 10, "6mo": 25, "12mo": 50},
+        "deepseek": {"3mo": 5, "6mo": 25, "12mo": 65}
+      }
+    },
+    {
+      "id": "CUL-01",
+      "category": "culture",
+      "title": "Commoditization of Intimacy",
+      "description": "Dating apps become majority bot traffic",
+      "search_queries": [
+        "dating app bot percentage increase",
+        "Tinder Hinge AI bot problem 2025",
+        "romance scam AI chatbot",
+        "dating platform authenticity crisis"
+      ],
+      "trigger_keywords": ["dating bots", "romance scam AI", "authenticity crisis", "bot dating"],
+      "probabilities": {
+        "opus": {"3mo": 40, "6mo": 65, "12mo": 85},
+        "gemini": {"3mo": 50, "6mo": 75, "12mo": 90},
+        "grok": {"3mo": 70, "6mo": 95, "12mo": 99},
+        "kimi": {"3mo": 60, "6mo": 85, "12mo": 98},
+        "gpt": {"3mo": 50, "6mo": 75, "12mo": 92},
+        "deepseek": {"3mo": 35, "6mo": 70, "12mo": 90}
+      }
+    },
+    {
+      "id": "CUL-02",
+      "category": "culture",
+      "title": "Parasocial Shield (Creator Agents)",
+      "description": "Influencer AI clones handling interactions",
+      "search_queries": [
+        "influencer AI clone fan interaction",
+        "MrBeast AI chatbot fans",
+        "creator economy AI automation",
+        "parasocial AI celebrity"
+      ],
+      "trigger_keywords": ["creator AI", "influencer clone", "parasocial AI", "fan chatbot"],
+      "probabilities": {
+        "opus": {"3mo": 30, "6mo": 55, "12mo": 80},
+        "gemini": {"3mo": 35, "6mo": 60, "12mo": 85},
+        "grok": {"3mo": 50, "6mo": 80, "12mo": 95},
+        "kimi": {"3mo": 40, "6mo": 70, "12mo": 90},
+        "gpt": {"3mo": 35, "6mo": 60, "12mo": 85},
+        "deepseek": {"3mo": 20, "6mo": 55, "12mo": 85}
+      }
+    },
+    {
+      "id": "CUL-03",
+      "category": "culture",
+      "title": "Anti-Agent Backlash",
+      "description": "Human-only premium offerings",
+      "search_queries": [
+        "human-only premium service trend",
+        "anti-AI community platform",
+        "authenticity verification human",
+        "analog revival movement AI"
+      ],
+      "trigger_keywords": ["human-only", "anti-AI", "authenticity premium", "analog revival"],
+      "probabilities": {
+        "opus": {"3mo": 15, "6mo": 35, "12mo": 60},
+        "gemini": {"3mo": 10, "6mo": 25, "12mo": 50},
+        "grok": {"3mo": 20, "6mo": 45, "12mo": 70},
+        "kimi": {"3mo": 10, "6mo": 25, "12mo": 50},
+        "gpt": {"3mo": 12, "6mo": 30, "12mo": 55},
+        "deepseek": {"3mo": 3, "6mo": 15, "12mo": 45}
+      }
+    },
+    {
+      "id": "SWAN-01",
+      "category": "black_swan",
+      "title": "Correlated Stampede",
+      "description": "Major flash crash from synchronized agents",
+      "search_queries": [
+        "crypto flash crash AI trading bots",
+        "market crash synchronized algorithms",
+        "inventory wipeout automated trading",
+        "agent swarm market incident"
+      ],
+      "trigger_keywords": ["flash crash", "stampede", "synchronized crash", "cascade collapse"],
+      "probabilities": {
+        "opus": {"6mo": 25},
+        "gemini": {"6mo": 30},
+        "grok": {"6mo": 80},
+        "kimi": {"6mo": 40},
+        "gpt": {"6mo": 35},
+        "deepseek": {"6mo": 25}
+      }
+    },
+    {
+      "id": "SWAN-02",
+      "category": "black_swan",
+      "title": "Prompt Injection ($1M+ loss)",
+      "description": "Document injection redirecting major payments",
+      "search_queries": [
+        "prompt injection payment redirect million",
+        "BEC prompt injection large loss",
+        "invoice hijack AI agent fraud",
+        "document injection financial loss"
+      ],
+      "trigger_keywords": ["million loss", "payment hijack", "BEC injection", "major fraud"],
+      "probabilities": {
+        "opus": {"6mo": 50},
+        "gemini": {"6mo": 60},
+        "grok": {"6mo": 85},
+        "kimi": {"6mo": 75},
+        "gpt": {"6mo": 65},
+        "deepseek": {"6mo": 50}
+      }
+    },
+    {
+      "id": "SWAN-03",
+      "category": "black_swan",
+      "title": "Gov Function Paralyzed",
+      "description": "City/agency suspends digital intake",
+      "search_queries": [
+        "government portal shutdown bot traffic",
+        "DMV system failure automated requests",
+        "city permit system crash bots",
+        "federal agency digital suspension"
+      ],
+      "trigger_keywords": ["portal shutdown", "system suspended", "intake closed", "overwhelmed"],
+      "probabilities": {
+        "opus": {"6mo": 35},
+        "gemini": {"6mo": 45},
+        "grok": {"6mo": 75},
+        "kimi": {"6mo": 60},
+        "gpt": {"6mo": 45},
+        "deepseek": {"6mo": 40}
+      }
+    },
+    {
+      "id": "SWAN-04",
+      "category": "black_swan",
+      "title": "Session Hijack Breach",
+      "description": "Fortune 500 breach via agent sessions",
+      "search_queries": [
+        "Fortune 500 breach AI agent session",
+        "enterprise compromise agent token",
+        "corporate hack long-lived session",
+        "major breach agent credential"
+      ],
+      "trigger_keywords": ["Fortune 500", "enterprise breach", "session compromise", "major hack"],
+      "probabilities": {
+        "opus": {"6mo": 40},
+        "gemini": {"6mo": 30},
+        "grok": {"6mo": null},
+        "kimi": {"6mo": 35},
+        "gpt": {"6mo": 35},
+        "deepseek": {"6mo": 20}
+      }
+    },
+    {
+      "id": "SWAN-05",
+      "category": "black_swan",
+      "title": "Ambiguity Event",
+      "description": "Agent misinterpretation causes major damage",
+      "search_queries": [
+        "AI agent error mass cancellation",
+        "automated system misinterpret disaster",
+        "agent mistake irreversible damage",
+        "AI decision catastrophic failure"
+      ],
+      "trigger_keywords": ["mass cancellation", "catastrophic error", "irreversible", "agent disaster"],
+      "probabilities": {
+        "opus": {"6mo": 25},
+        "gemini": {"6mo": 15},
+        "grok": {"6mo": null},
+        "kimi": {"6mo": 20},
+        "gpt": {"6mo": 20},
+        "deepseek": {"6mo": 10}
+      }
+    },
+    {
+      "id": "SWAN-06",
+      "category": "black_swan",
+      "title": "Backdoored Agent Pack",
+      "description": "Popular pack exfiltrating across thousands",
+      "search_queries": [
+        "malicious AI agent pack discovered",
+        "backdoor agent framework CVE",
+        "agent package malware thousands",
+        "supply chain attack AI agents"
+      ],
+      "trigger_keywords": ["malicious pack", "backdoor discovered", "widespread compromise", "supply chain"],
+      "probabilities": {
+        "opus": {"6mo": 45},
+        "gemini": {"6mo": 55},
+        "grok": {"6mo": 90},
+        "kimi": {"6mo": 75},
+        "gpt": {"6mo": 60},
+        "deepseek": {"6mo": 70}
+      }
+    },
+    {
+      "id": "SWAN-07",
+      "category": "black_swan",
+      "title": "Data Poisoning (Caught)",
+      "description": "Company caught poisoning competitor data",
+      "search_queries": [
+        "data poisoning competitor caught",
+        "deliberate misinformation AI training",
+        "sabotage competitor agent data",
+        "caught poisoning public data"
+      ],
+      "trigger_keywords": ["caught poisoning", "deliberate sabotage", "data manipulation", "competitor attack"],
+      "probabilities": {
+        "opus": {"6mo": 35},
+        "gemini": {"6mo": 25},
+        "grok": {"6mo": 60},
+        "kimi": {"6mo": 30},
+        "gpt": {"6mo": 30},
+        "deepseek": {"6mo": 15}
+      }
+    }
+  ],
+  "category_schedule": {
+    "daily": ["SEC-05", "SEC-06", "ATK-01", "ATK-05", "SWAN-06"],
+    "monday_wednesday_friday": ["INF-01", "INF-02", "INF-03", "MKT-02", "MKT-03"],
+    "tuesday_thursday": ["SEC-01", "SEC-02", "BIZ-04", "ATK-03", "META-03"],
+    "saturday": ["all_swans", "META-01", "META-02", "META-04", "CUL-01", "CUL-02"],
+    "sunday": ["weekly_synthesis"]
+  }
+}

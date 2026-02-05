@@ -1,0 +1,46 @@
+# docker-compose.yml for Hetzner deployment
+# 
+# Usage:
+#   1. Copy .env.example to .env and fill in API keys
+#   2. docker-compose up -d
+#   3. Check logs: docker-compose logs -f
+#
+version: '3.8'
+
+services:
+  seismograph:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - TAVILY_API_KEY=${TAVILY_API_KEY}
+    volumes:
+      - ../output:/app/output
+    restart: unless-stopped
+    # Run with cron inside container
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        # Install cron
+        apt-get update && apt-get install -y cron
+        
+        # Create cron job for daily scan at 10:00 UTC
+        echo "0 10 * * * cd /app && python gatherer.py --schedule >> /var/log/seismograph.log 2>&1" > /etc/cron.d/seismograph
+        chmod 0644 /etc/cron.d/seismograph
+        crontab /etc/cron.d/seismograph
+        
+        # Run initial scan
+        python gatherer.py --schedule
+        
+        # Start cron daemon
+        cron -f
+
+  # Optional: Simple web server to view results
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ../output:/usr/share/nginx/html:ro
+    restart: unless-stopped
