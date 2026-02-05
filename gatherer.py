@@ -8,6 +8,9 @@ import os
 import json
 import asyncio
 import argparse
+import random
+import re
+import time
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
@@ -21,11 +24,21 @@ GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 TAVILY_API_KEY = os.environ.get("TAVILY_API_KEY")
 GROQ_MODEL = "openai/gpt-oss-120b"  # Fast, high quality
 TAVILY_SEARCH_DEPTH = "advanced"  # or "basic" for faster/cheaper
+GROQ_MIN_REQUEST_INTERVAL = float(os.environ.get("GROQ_MIN_REQUEST_INTERVAL", "2.5"))
+GROQ_MAX_RETRIES = int(os.environ.get("GROQ_MAX_RETRIES", "4"))
+GROQ_BACKOFF_BASE = float(os.environ.get("GROQ_BACKOFF_BASE", "2.0"))
+GROQ_BACKOFF_MAX = float(os.environ.get("GROQ_BACKOFF_MAX", "30.0"))
+GROQ_MAX_SOURCES = int(os.environ.get("GROQ_MAX_SOURCES", "6"))
+GROQ_MAX_SOURCE_CHARS = int(os.environ.get("GROQ_MAX_SOURCE_CHARS", "700"))
+GROQ_MAX_QUERY_SUMMARY_CHARS = int(os.environ.get("GROQ_MAX_QUERY_SUMMARY_CHARS", "300"))
+GROQ_MAX_CONTEXT_CHARS = int(os.environ.get("GROQ_MAX_CONTEXT_CHARS", "8000"))
+GROQ_MAX_OUTPUT_TOKENS = int(os.environ.get("GROQ_MAX_OUTPUT_TOKENS", "1200"))
 
 BASE_DIR = Path(__file__).parent
 CONFIG_DIR = BASE_DIR / "config"
 OUTPUT_DIR = BASE_DIR / "output"
 OUTPUT_DIR.mkdir(exist_ok=True)
+_GROQ_NEXT_REQUEST_TIME = 0.0
 
 # ============================================================================
 # PREDICTION CATALOG (legacy embedded; overridden by config/predictions.json)
@@ -266,6 +279,84 @@ async def tavily_search_context(query: str, max_tokens: int = 4000) -> str:
 # GROQ ANALYSIS
 # ============================================================================
 
+class GroqRateLimitError(RuntimeError):
+    pass
+
+
+def _parse_groq_duration_seconds(value: Optional[str]) -> Optional[float]:
+    if not value:
+        return None
+    raw = value.strip().lower()
+    try:
+        return float(raw)
+    except ValueError:
+        pass
+
+    # Groq docs use values such as "7.66s" and "2m59.56s"
+    match = re.fullmatch(r"(?:(\d+)m)?\s*([0-9]+(?:\.[0-9]+)?)s", raw)
+    if not match:
+        return None
+
+    minutes = float(match.group(1) or 0)
+    seconds = float(match.group(2))
+    return (minutes * 60.0) + seconds
+
+
+def _groq_cooldown_from_headers(headers: httpx.Headers, fallback_seconds: float) -> float:
+    header_delays = [
+        _parse_groq_duration_seconds(headers.get("retry-after")),
+        _parse_groq_duration_seconds(headers.get("x-ratelimit-reset-tokens")),
+        _parse_groq_duration_seconds(headers.get("x-ratelimit-reset-requests")),
+    ]
+    valid_delays = [d for d in header_delays if d is not None and d >= 0]
+    if valid_delays:
+        return max(GROQ_MIN_REQUEST_INTERVAL, min(max(valid_delays), GROQ_BACKOFF_MAX))
+    return max(GROQ_MIN_REQUEST_INTERVAL, min(fallback_seconds, GROQ_BACKOFF_MAX))
+
+
+async def _respect_groq_cooldown():
+    global _GROQ_NEXT_REQUEST_TIME
+    now = time.monotonic()
+    wait_seconds = _GROQ_NEXT_REQUEST_TIME - now
+    if wait_seconds > 0:
+        await asyncio.sleep(wait_seconds)
+    _GROQ_NEXT_REQUEST_TIME = max(_GROQ_NEXT_REQUEST_TIME, time.monotonic()) + GROQ_MIN_REQUEST_INTERVAL
+
+
+def _extend_groq_cooldown(delay_seconds: float):
+    global _GROQ_NEXT_REQUEST_TIME
+    _GROQ_NEXT_REQUEST_TIME = max(_GROQ_NEXT_REQUEST_TIME, time.monotonic() + max(0.0, delay_seconds))
+
+
+def _analysis_failure_payload(exc: Exception) -> dict:
+    message = str(exc)
+    if isinstance(exc, GroqRateLimitError) or "429" in message or "Too Many Requests" in message:
+        return {
+            "signals": [],
+            "overall_activity": "none",
+            "summary": "Analysis skipped due to Groq rate limits; retry on the next run.",
+        }
+    return {
+        "signals": [],
+        "overall_activity": "none",
+        "summary": "Analysis unavailable due to API or parsing error.",
+    }
+
+
+def _trim_text(value: str, max_chars: int) -> str:
+    if max_chars <= 0 or len(value) <= max_chars:
+        return value
+    return value[:max_chars].rstrip() + "... [truncated]"
+
+
+def _source_relevance_score(source: dict, prediction: dict) -> int:
+    text = f"{source.get('title', '')} {source.get('content', '')}".lower()
+    keywords = [k.lower() for k in prediction.get("trigger_keywords", []) if k]
+    if not keywords:
+        return 0
+    return sum(1 for kw in keywords if kw in text)
+
+
 async def groq_analyze(search_context: str, prediction: dict) -> dict:
     """
     Use Groq to analyze search results against a prediction
@@ -311,30 +402,51 @@ SEARCH RESULTS:
 
 Analyze these results for signals relevant to the prediction. Return JSON only."""
 
+    max_attempts = GROQ_MAX_RETRIES + 1
+    fallback_backoff = GROQ_BACKOFF_BASE
+
     async with httpx.AsyncClient(timeout=60.0) as client:
-        response = await client.post(
-            "https://api.groq.com/openai/v1/chat/completions",
-            headers={
-                "Authorization": f"Bearer {GROQ_API_KEY}",
-                "Content-Type": "application/json"
-            },
-            json={
-                "model": GROQ_MODEL,
-                "messages": [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt}
-                ],
-                "temperature": 0.2,
-                "max_tokens": 2000,
-                "response_format": {"type": "json_object"}
-            }
-        )
-        response.raise_for_status()
-        data = response.json()
-        
-        # Parse the JSON response
-        content = data["choices"][0]["message"]["content"]
-        return json.loads(content)
+        for attempt in range(1, max_attempts + 1):
+            await _respect_groq_cooldown()
+            response = await client.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {GROQ_API_KEY}",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "model": GROQ_MODEL,
+                    "messages": [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_prompt}
+                    ],
+                    "temperature": 0.2,
+                    "max_tokens": GROQ_MAX_OUTPUT_TOKENS,
+                    "response_format": {"type": "json_object"}
+                }
+            )
+
+            if response.status_code == 429:
+                delay = _groq_cooldown_from_headers(
+                    response.headers,
+                    fallback_backoff + random.uniform(0, 1),
+                )
+                _extend_groq_cooldown(delay)
+                if attempt >= max_attempts:
+                    raise GroqRateLimitError("Groq rate limit reached after retries")
+                print(f"    Groq rate-limited, retrying in {delay:.1f}s (attempt {attempt}/{max_attempts})")
+                await asyncio.sleep(delay)
+                fallback_backoff = min(GROQ_BACKOFF_MAX, fallback_backoff * 2)
+                continue
+
+            response.raise_for_status()
+            data = response.json()
+
+            # Parse the JSON response
+            content = data["choices"][0]["message"]["content"]
+            return json.loads(content)
+
+    raise RuntimeError("Groq analysis failed after retries")
 
 # ============================================================================
 # MAIN SCANNING LOGIC
@@ -368,32 +480,36 @@ async def scan_prediction(prediction_id: str) -> dict:
             
             # Build context
             if result.get("answer"):
-                all_context.append(f"Query '{query}' summary: {result['answer']}")
+                answer = _trim_text(str(result["answer"]), GROQ_MAX_QUERY_SUMMARY_CHARS)
+                all_context.append(f"Query '{query}' summary: {answer}")
             
         except Exception as e:
             print(f"    Warning: Search failed for '{query}': {e}")
     
     # Format combined context
     context_parts = all_context.copy()
-    for i, source in enumerate(all_sources[:10], 1):  # Limit to top 10
+    ranked_sources = sorted(
+        all_sources,
+        key=lambda source: _source_relevance_score(source, prediction),
+        reverse=True,
+    )
+    selected_sources = ranked_sources[:max(1, GROQ_MAX_SOURCES)]
+    for i, source in enumerate(selected_sources, 1):
+        source_content = _trim_text(str(source.get("content", "")), GROQ_MAX_SOURCE_CHARS)
         context_parts.append(
             f"[{i}] {source.get('title', 'No title')}\n"
             f"URL: {source.get('url', '')}\n"
-            f"Content: {source.get('content', '')}\n"
+            f"Content: {source_content}\n"
         )
     
-    combined_context = "\n\n".join(context_parts)
+    combined_context = _trim_text("\n\n".join(context_parts), GROQ_MAX_CONTEXT_CHARS)
     
     # Analyze with Groq
     try:
         analysis = await groq_analyze(combined_context, prediction)
     except Exception as e:
         print(f"    Warning: Analysis failed: {e}")
-        analysis = {
-            "signals": [],
-            "overall_activity": "error",
-            "summary": f"Analysis failed: {str(e)}"
-        }
+        analysis = _analysis_failure_payload(e)
     
     # Build output
     return {
